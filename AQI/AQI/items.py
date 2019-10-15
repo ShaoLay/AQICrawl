@@ -11,4 +11,14 @@ import scrapy
 class AqiItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
-    pass
+    city_name = scrapy.Field()
+    date = scrapy.Field()
+    aqi = scrapy.Field()
+    level = scrapy.Field()
+    pm2_5 = scrapy.Field()
+    pm_10 = scrapy.Field()
+    so_2 = scrapy.Field()
+    co = scrapy.Field()
+    no_2 = scrapy.Field()
+    o_3 = scrapy.Field()
+
