@@ -43,15 +43,24 @@ class AqiSpider(scrapy.Spider):
         tr_list = response.xpath('//tr')
         tr_list.pop(0)
         for tr in tr_list:
-            item['date'] = tr.xpath('/html/body/div[3]/div[1]/div[1]/table/tbody/tr/td[1]/text()').extract_first()
-            item['aqi'] = tr.xpath('/html/body/div[3]/div[1]/div[1]/table/tbody/tr/td[2]/text()').extract_first()
-            item['level'] = tr.xpath('/html/body/div[3]/div[1]/div[1]/table/tbody/tr/td[3]/span/text()').extract_first()
-            item['pm2_5'] = tr.xpath('/html/body/div[3]/div[1]/div[1]/table/tbody/tr/td[4]/text()').extract_first()
-            item['pm_10'] = tr.xpath('/html/body/div[3]/div[1]/div[1]/table/tbody/tr/td[5]/text()').extract_first()
-            item['so_2'] = tr.xpath('/html/body/div[3]/div[1]/div[1]/table/tbody/tr/td[6]/text()').extract_first()
-            item['co'] = tr.xpath('/html/body/div[3]/div[1]/div[1]/table/tbody/tr/td[7]/text()').extract_first()
-            item['no_2'] = tr.xpath('/html/body/div[3]/div[1]/div[1]/table/tbody/tr/td[8]/text()').extract_first()
-            item['o_3'] = tr.xpath('/html/body/div[3]/div[1]/div[1]/table/tbody/tr/td[9]/text()').extract_first()
+            # 日期
+            item['date'] = tr.xpath('./td[1]/text()').extract_first()
+            # AQI
+            item['aqi'] = tr.xpath('./td[2]/text()').extract_first()
+            # 质量等级
+            item['level'] = tr.xpath('./td[3]//text()').extract_first()
+            # PM2.5
+            item['pm2_5'] = tr.xpath('./td[4]/text()').extract_first()
+            # PM10
+            item['pm_10'] = tr.xpath('./td[5]/text()').extract_first()
+            # 二氧化硫
+            item['so_2'] = tr.xpath('./td[6]/text()').extract_first()
+            # 一氧化碳
+            item['co'] = tr.xpath('./td[7]/text()').extract_first()
+            # 二氧化氮
+            item['no_2'] = tr.xpath('./td[8]/text()').extract_first()
+            # 臭氧
+            item['o_3'] = tr.xpath('./td[9]/text()').extract_first()
 
             yield item
 
