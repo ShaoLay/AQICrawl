@@ -22,3 +22,7 @@ class AqiItem(scrapy.Item):
     no_2 = scrapy.Field()
     o_3 = scrapy.Field()
 
+    # 数据源的字段
+    data_time = scrapy.Field()
+    spider = scrapy.Field()
+
