@@ -12,8 +12,8 @@ class AqiSpider(scrapy.Spider):
 
 
     def parse(self, response):
-        city_name_list = response.xpath('/html/body/div[3]/div/div[1]/div[2]/div[2]/ul/div[2]/li/a/text()').extract()
-        city_link_list = response.xpath('/html/body/div[3]/div/div[1]/div[2]/div[2]/ul/div[2]/li/a/@href').extract()
+        city_name_list = response.xpath('/html/body/div[3]/div/div[1]/div[2]/div[2]/ul/div[2]/li/a/text()').extract()[10:11]
+        city_link_list = response.xpath('/html/body/div[3]/div/div[1]/div[2]/div[2]/ul/div[2]/li/a/@href').extract()[10:11]
 
         for city_name, city_link in zip(city_name_list, city_link_list):
             item = AqiItem()
@@ -28,7 +28,7 @@ class AqiSpider(scrapy.Spider):
         :return:
         """
         item = response.meta['citykey']
-        month_link_lilst = response.xpath('/html/body/div[3]/div[1]/div[1]/table/tbody/tr/td[1]/a/@href').extract()
+        month_link_lilst = response.xpath('/html/body/div[3]/div[1]/div[1]/table/tbody/tr/td[1]/a/@href').extract()[5:6]
         for month_link in month_link_lilst:
             url = self.base_url + month_link
             yield scrapy.Request(url, meta={'citykey':item}, callback=self.parse_day)
