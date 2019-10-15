@@ -12,8 +12,8 @@ class AqiSpider(scrapy.Spider):
 
 
     def parse(self, response):
-        city_name_list = response.xpath('/html/body/div[3]/div/div[1]/div[2]/div[2]/ul/div[2]/li/a/text()').extract()[10:11]
-        city_link_list = response.xpath('/html/body/div[3]/div/div[1]/div[2]/div[2]/ul/div[2]/li/a/@href').extract()[10:11]
+        city_name_list = response.xpath('/html/body/div[3]/div/div[1]/div[2]/div[2]/ul/div[2]/li/a/text()').extract()[36:37]
+        city_link_list = response.xpath('/html/body/div[3]/div/div[1]/div[2]/div[2]/ul/div[2]/li/a/@href').extract()[36:37]
 
         for city_name, city_link in zip(city_name_list, city_link_list):
             item = AqiItem()
@@ -45,7 +45,7 @@ class AqiSpider(scrapy.Spider):
         for tr in tr_list:
             item['date'] = tr.xpath('/html/body/div[3]/div[1]/div[1]/table/tbody/tr/td[1]/text()').extract_first()
             item['aqi'] = tr.xpath('/html/body/div[3]/div[1]/div[1]/table/tbody/tr/td[2]/text()').extract_first()
-            item['level'] = tr.xpath('/html/body/div[3]/div[1]/div[1]/table/tbody/tr/td[3]/text()').extract_first()
+            item['level'] = tr.xpath('/html/body/div[3]/div[1]/div[1]/table/tbody/tr/td[3]/span/text()').extract_first()
             item['pm2_5'] = tr.xpath('/html/body/div[3]/div[1]/div[1]/table/tbody/tr/td[4]/text()').extract_first()
             item['pm_10'] = tr.xpath('/html/body/div[3]/div[1]/div[1]/table/tbody/tr/td[5]/text()').extract_first()
             item['so_2'] = tr.xpath('/html/body/div[3]/div[1]/div[1]/table/tbody/tr/td[6]/text()').extract_first()
