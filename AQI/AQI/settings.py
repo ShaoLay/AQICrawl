@@ -68,6 +68,8 @@ ITEM_PIPELINES = {
    'AQI.pipelines.AqiDataPipeline': 200,
    'AQI.pipelines.AqiCsvPipeline': 300,
    'AQI.pipelines.AqiJsonPipeline': 400,
+   # 'AQI.pipelines.AqiMongodbPipeline': 500,
+   'AQI.pipelines.AqiRedisPipeline': 500,
 
 }
 

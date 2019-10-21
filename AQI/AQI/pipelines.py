@@ -6,7 +6,8 @@
 # See: https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 import datetime
 
-# import pymongo
+import pymongo
+import redis
 from scrapy.exporters import JsonItemExporter, CsvItemExporter
 
 
@@ -46,10 +47,22 @@ class AqiCsvPipeline(object):
 
 # class AqiMongodbPipeline(object):
 #     def open_spider(self, spider):
-#         self.client = pymongo.MongoClient(host='127.0.0.1', port='27107')
+#         self.client = pymongo.MongoClient(host="127.0.0.1", port=27107)
 #         self.db = self.client['moAqi']
 #         self.colletion = self.db['aqi']
 #
 #     def process_item(self, item, spider):
-#         pass
+#         self.colletion.insert(dict(item))
+#         return item
+#
+#     def close_spider(self, spider):
+#         self.client.close()
+
+class AqiRedisPipeline(object):
+    def open_spider(self, spider):
+        self.client = redis.Redis(host="127.0.0.1", port=6379)
+
+    def process_item(self, item, spider):
+        self.client.lpush('aqi_list_mo', dict(item))
+        return item
 
