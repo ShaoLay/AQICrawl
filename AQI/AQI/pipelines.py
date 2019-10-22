@@ -45,18 +45,18 @@ class AqiCsvPipeline(object):
         self.writer.finish_exporting()
         self.file.close()
 
-# class AqiMongodbPipeline(object):
-#     def open_spider(self, spider):
-#         self.client = pymongo.MongoClient(host="127.0.0.1", port=27107)
-#         self.db = self.client['moAqi']
-#         self.colletion = self.db['aqi']
-#
-#     def process_item(self, item, spider):
-#         self.colletion.insert(dict(item))
-#         return item
-#
-#     def close_spider(self, spider):
-#         self.client.close()
+class AqiMongodbPipeline(object):
+    def open_spider(self, spider):
+        self.client = pymongo.MongoClient('mongodb://localhost:27017')
+        self.db = self.client['moAqi']
+        self.colletion = self.db['aqi']
+
+    def process_item(self, item, spider):
+        self.colletion.insert(dict(item))
+        return item
+
+    def close_spider(self, spider):
+        self.client.close()
 
 class AqiRedisPipeline(object):
     def open_spider(self, spider):
