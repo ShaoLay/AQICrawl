@@ -66,10 +66,11 @@ DOWNLOADER_MIDDLEWARES = {
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
    'AQI.pipelines.AqiDataPipeline': 200,
-   'AQI.pipelines.AqiCsvPipeline': 300,
-   'AQI.pipelines.AqiJsonPipeline': 400,
-   'AQI.pipelines.AqiMongodbPipeline': 500,
-   'AQI.pipelines.AqiRedisPipeline': 600,
+   # 'AQI.pipelines.AqiCsvPipeline': 300,
+   # 'AQI.pipelines.AqiJsonPipeline': 400,
+   # 'AQI.pipelines.AqiMongodbPipeline': 500,
+   # 'AQI.pipelines.AqiRedisPipeline': 600,
+   'scrapy_redis.pipelines.RedisPipeline':300
 
 }
 
@@ -93,3 +94,15 @@ ITEM_PIPELINES = {
 #HTTPCACHE_DIR = 'httpcache'
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+
+# 1.设置 分布式的 去重组件
+DUPEFILTER_CLASS = "scrapy_redis.dupefilter.RFPDupeFilter"
+# 2.设置 分布式的 调度器
+SCHEDULER = "scrapy_redis.scheduler.Scheduler"
+
+# 3.允许爬虫中途停止 中断
+SCHEDULER_PERSIST = True
+
+# 4.设置 redis 数据库的端口号 和IP
+REDIS_HOST = '127.0.0.1'
+REDIS_PORT = 6379
